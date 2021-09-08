@@ -1,0 +1,44 @@
+{
+  "name": "proxy-ali-oss",
+  "version": "0.0.1-beta.1",
+  "description": "代理ali-oss",
+  "main": "/dist/ProxyAliOss.cjs.min.js",
+  "model": "/dist/ProxyAliOss.esm.min.js",
+  "scripts": {
+    "build": "node build/rollup.config.js",
+    "test:cov": "jest --coverage",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hengshanMWC/proxy-ali-oss.git"
+  },
+  "keywords": [
+    "http",
+    "api",
+    "axios",
+    "fly.io"
+  ],
+  "author": "mwc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hengshanMWC/proxy-ali-oss/issues"
+  },
+  "homepage": "https://github.com/hengshanMWC/proxy-ali-oss#readme",
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "babel-jest": "^25.5.1",
+    "camelcase": "^6.0.0",
+    "jest": "^25.5.4",
+    "rollup": "^2.7.6",
+    "rollup-plugin-typescript2": "^0.27.0",
+    "terser": "^4.6.13",
+    "ts-jest": "^25.4.0",
+    "ts-node": "^8.10.1",
+    "validate-npm-package-name": "^3.0.0"
+  },
+  "dependencies": {
+    "ali-oss": "^6.16.0",
+    "typescript": "^3.9.5"
+  }
+}
