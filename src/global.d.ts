@@ -5,8 +5,7 @@ interface HttpSTS {
     stsToken: string;
   }>;
 }
-interface ProxyOptions {
+interface Interceptors {
   then?(data: any): Promise<any>;
   catch?(data: any): Promise<any>;
-  finally?(): Promise<any>;
 }

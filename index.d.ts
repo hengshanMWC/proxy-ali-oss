@@ -5,8 +5,7 @@ export interface HttpSTS {
     stsToken: string;
   }>;
 }
-export interface ProxyOptions {
+export interface Interceptors {
   then?(data: any): Promise<any>;
   catch?(data: any): Promise<any>;
-  finally?(): Promise<any>;
 }

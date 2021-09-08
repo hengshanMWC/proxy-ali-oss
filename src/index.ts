@@ -5,18 +5,18 @@ import { createProxy, createDefinePropertyProxy } from "./proxy";
 const createProxyType =
   typeof Proxy !== "undefined" ? createProxy : createDefinePropertyProxy;
 
-export function createProxyClient(
+export function createProxyOSS(
   options: object,
   http: HttpSTS,
-  proxyOptions?: ProxyOptions
+  interceptors?: Interceptors
 ) {
-  return createProxyType(createProxyFunction(http, options, proxyOptions));
+  return createProxyType(createProxyFunction(http, options, interceptors));
 }
 
 function createProxyFunction(
   http: HttpSTS,
   options: object,
-  proxyOptions: ProxyOptions = {}
+  interceptors: Interceptors = {}
 ) {
   let client: any = null;
   let p: Promise<any> | null = null; // 缓存起来，防止多次触发
@@ -28,13 +28,8 @@ function createProxyFunction(
       .then(
         (data) =>
           (client = new OSS({
-            refreshSTSToken: async () => {
-              const info = await http.getSTS();
-              return {
-                accessKeyId: info.accessKeyId,
-                accessKeySecret: info.accessKeySecret,
-                stsToken: info.stsToken,
-              };
+            refreshSTSToken() {
+              return http.getSTS();
             },
             refreshSTSTokenInterval: 600000, // 目前是15分钟过期，这里设置成10分钟国旗
             ...options,
@@ -47,10 +42,10 @@ function createProxyFunction(
   function handler(
     data: any,
     fn: (value: unknown) => void,
-    cdType: keyof ProxyOptions
+    cdType: keyof Interceptors
   ) {
-    if (typeof proxyOptions[cdType] === "function") {
-      (proxyOptions[cdType] as Function)(data).then((data: any) => fn(data));
+    if (typeof interceptors[cdType] === "function") {
+      (interceptors[cdType] as Function)(data).then((data: any) => fn(data));
     } else {
       fn(data);
     }
